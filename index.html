@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘訊息 | 山豬生日快樂！Party Time 🎉</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti for celebratory visual effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            overflow-x: hidden;
+        }
+
+        .bounce-gentle {
+            animation: bounceGentle 2.5s infinite ease-in-out;
+        }
+
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1.5deg); }
+        }
+
+        /* Floating balloons background animation */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            opacity: 0.85;
+            animation: floatUp 8s infinite linear;
+            z-index: 5;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+        .custom-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Ambient glowing effect for mystery overlay */
+        .glow-effect {
+            box-shadow: 0 0 50px rgba(236, 72, 153, 0.25);
+        }
+
+        /* Kandinsky Abstract Art Frame Overlay Styles */
+        .kandinsky-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.85;
+        }
+
+        /* Floating pulse animation for geometric elements */
+        .k-float {
+            animation: kFloat 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes kFloat {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(12px, -15px) rotate(10deg) scale(1.05); }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative text-slate-800 transition-colors duration-1000">
+
+    <!-- Kandinsky Artistic Abstract Background Frame -->
+    <div class="kandinsky-bg">
+        <!-- Abstract Concentric Circles (Kandinsky's Squares with Concentric Circles style) -->
+        <svg class="absolute top-4 left-4 w-40 h-40 md:w-60 md:h-60 k-float opacity-70" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="90" fill="#f43f5e" opacity="0.25"/>
+            <circle cx="100" cy="100" r="70" fill="#f59e0b" opacity="0.35"/>
+            <circle cx="100" cy="100" r="50" fill="#06b6d4" opacity="0.45"/>
+            <circle cx="100" cy="100" r="30" fill="#8b5cf6" opacity="0.6"/>
+            <circle cx="100" cy="100" r="12" fill="#10b981"/>
+            <line x1="10" y1="100" x2="190" y2="100" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+            <line x1="40" y1="20" x2="160" y2="180" stroke="#f43f5e" stroke-width="2"/>
+        </svg>
+
+        <svg class="absolute top-12 right-6 w-36 h-36 md:w-52 md:h-52 k-float opacity-70" style="animation-delay: -2s;" viewBox="0 0 200 200">
+            <polygon points="100,20 180,170 20,170" fill="#3b82f6" opacity="0.2"/>
+            <circle cx="100" cy="110" r="45" fill="#ec4899" opacity="0.4"/>
+            <circle cx="100" cy="110" r="25" fill="#f59e0b"/>
+            <line x1="10" y1="180" x2="190" y2="20" stroke="#0f172a" stroke-width="4"/>
+            <circle cx="160" cy="50" r="15" fill="#10b981" opacity="0.8"/>
+        </svg>
+
+        <svg class="absolute bottom-10 left-8 w-44 h-44 md:w-64 md:h-64 k-float opacity-60" style="animation-delay: -4s;" viewBox="0 0 200 200">
+            <rect x="30" y="30" width="140" height="140" fill="#8b5cf6" rx="20" opacity="0.2" transform="rotate(15 100 100)"/>
+            <circle cx="80" cy="80" r="40" fill="#f43f5e" opacity="0.5"/>
+            <circle cx="120" cy="120" r="30" fill="#06b6d4" opacity="0.6"/>
+            <path d="M 20 100 Q 100 20 180 100 T 20 180" stroke="#f59e0b" stroke-width="4" fill="none"/>
+        </svg>
+
+        <svg class="absolute bottom-12 right-4 w-40 h-40 md:w-56 md:h-56 k-float opacity-70" style="animation-delay: -1s;" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="80" fill="#10b981" opacity="0.2"/>
+            <polygon points="100,10 170,150 30,150" fill="#f43f5e" opacity="0.3"/>
+            <circle cx="100" cy="100" r="30" fill="#3b82f6"/>
+            <line x1="0" y1="50" x2="200" y2="150" stroke="#0f172a" stroke-width="3"/>
+            <line x1="50" y1="0" x2="150" y2="200" stroke="#ec4899" stroke-width="3"/>
+        </svg>
+    </div>
+
+    <div id="balloon-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- Sequential Mysterious 3-Step Confirmation Modal -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-xl p-4 transition-all duration-500">
+        <div class="bg-slate-900/90 border border-slate-700/60 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl glow-effect transform transition-all duration-300">
+            <h3 id="modal-title" class="text-xl font-bold text-slate-100 mb-8 tracking-wide">
+                確定要開打開站嗎？
+            </h3>
+            <div class="flex gap-4">
+                <button onclick="handleConfirmationResponse(false)" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 font-bold rounded-xl transition-all active:scale-95 text-sm border border-slate-700">
+                    取消
+                </button>
+                <button id="modal-confirm-btn" onclick="handleConfirmationResponse(true)" class="flex-1 py-3 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold rounded-xl shadow-lg transition-all active:scale-95 text-sm">
+                    確定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Surprise Content Container -->
+    <main id="main-content" class="relative z-10 min-h-screen flex flex-col items-center justify-between p-4 md:p-8 max-w-4xl mx-auto opacity-0 transition-opacity duration-1000 pointer-events-none">
+        
+        <!-- Header / Banner -->
+        <header class="w-full text-center mt-4 mb-6">
+            <div class="inline-flex items-center gap-2 bg-amber-200/90 text-amber-900 px-4 py-1.5 rounded-full font-bold text-sm mb-3 shadow-md backdrop-blur-sm">
+                <i class="fa-solid fa-crown text-amber-600"></i> 今日壽星大最大
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white mb-2 drop-shadow-md">
+                🐗 山豬，生日快樂！ 🎂
+            </h1>
+            <p class="text-rose-300 font-semibold text-lg md:text-xl">Happy Birthday to our favorite Wild Boar!</p>
+        </header>
+
+        <!-- Main Card Section with Kandinsky Frame accents -->
+        <section class="w-full custom-card rounded-3xl p-6 md:p-10 shadow-2xl border-2 border-white/80 mb-8 relative overflow-hidden">
+            
+            <!-- Kandinsky Art Frame Border Accent inside card -->
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-500 via-amber-400 via-emerald-400 to-indigo-500"></div>
+            
+            <!-- Wild Boar Kawaii Illustration & Content -->
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+                
+                <!-- Cute Style Kawaii Wild Boar SVG Graphic -->
+                <div class="relative bounce-gentle flex-shrink-0">
+                    <!-- Party Hat -->
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
+                        <svg width="50" height="50" viewBox="0 0 100 100">
+                            <polygon points="50,10 15,90 85,90" fill="url(#hat-grad)" />
+                            <defs>
+                                <linearGradient id="hat-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f43f5e" />
+                                    <stop offset="100%" stop-color="#fb7185" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="50" cy="10" r="10" fill="#f59e0b" />
+                            <path d="M 15 90 Q 50 80 85 90" stroke="#fef08a" stroke-width="6" fill="none"/>
+                            <circle cx="35" cy="45" r="5" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="62" cy="65" r="6" fill="#ffffff" opacity="0.9"/>
+                        </svg>
+                    </div>
+
+                    <!-- Kawaii Wild Boar SVG Graphic (Optimized & Enhanced Details) -->
+                    <div class="w-52 h-52 md:w-60 md:h-60 bg-gradient-to-b from-amber-100 via-rose-100 to-amber-200 rounded-full border-4 border-pink-300 shadow-2xl flex items-center justify-center p-2 relative">
+                        <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+                            <defs>
+                                <radialGradient id="boar-fur" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#d98e5e" />
+                                    <stop offset="100%" stop-color="#ab5f2d" />
+                                </radialGradient>
+                                <linearGradient id="snout-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#fbcfe8" />
+                                    <stop offset="100%" stop-color="#f472b6" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Cute Rounded Ears with Depth -->
+                            <path d="M 35 65 C 18 35, 52 15, 70 48 Z" fill="#ab5f2d" stroke="#8d4a21" stroke-width="2"/>
+                            <path d="M 165 65 C 182 35, 148 15, 130 48 Z" fill="#ab5f2d" stroke="#8d4a21" stroke-width="2"/>
+                            <path d="M 42 62 C 28 42, 53 30, 65 50 Z" fill="#f472b6" />
+                            <path d="M 158 62 C 172 42, 147 30, 135 50 Z" fill="#f472b6" />
+
+                            <!-- Boar Head / Body -->
+                            <ellipse cx="100" cy="112" rx="70" ry="60" fill="url(#boar-fur)" stroke="#8d4a21" stroke-width="3" />
+
+                            <!-- Fluffy Cheeks Tufts -->
+                            <path d="M 28 115 Q 18 118 25 125 Q 15 128 28 132" fill="#ab5f2d" stroke="#8d4a21" stroke-width="2" />
+                            <path d="M 172 115 Q 182 118 175 125 Q 185 128 172 132" fill="#ab5f2d" stroke="#8d4a21" stroke-width="2" />
+
+                            <!-- Head Stripes Pattern (Cute Boar Stripe Feature) -->
+                            <path d="M 80 56 Q 100 48 120 56" stroke="#693311" stroke-width="5" stroke-linecap="round" fill="none"/>
+                            <path d="M 85 68 Q 100 60 115 68" stroke="#693311" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+                            <!-- Cute Sparkly Eyes -->
+                            <ellipse cx="68" cy="96" rx="12" ry="14" fill="#1c1917" />
+                            <ellipse cx="132" cy="96" rx="12" ry="14" fill="#1c1917" />
+                            <!-- Eye Catchlights -->
+                            <circle cx="64" cy="91" r="5" fill="#ffffff" />
+                            <circle cx="72" cy="100" r="2.5" fill="#ffffff" />
+                            <circle cx="128" cy="91" r="5" fill="#ffffff" />
+                            <circle cx="136" cy="100" r="2.5" fill="#ffffff" />
+
+                            <!-- Blushing Kawaii Cheeks -->
+                            <ellipse cx="50" cy="114" rx="13" ry="8" fill="#f43f5e" opacity="0.65" />
+                            <ellipse cx="150" cy="114" rx="13" ry="8" fill="#f43f5e" opacity="0.65" />
+
+                            <!-- Cute Curved Tusks -->
+                            <path d="M 68 126 Q 54 122 56 108 Q 66 118 76 124 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+                            <path d="M 132 126 Q 146 122 144 108 Q 134 118 124 124 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+
+                            <!-- Chubby Pink Snout -->
+                            <ellipse cx="100" cy="118" rx="28" ry="19" fill="url(#snout-grad)" stroke="#f43f5e" stroke-width="1.5"/>
+                            <ellipse cx="90" cy="118" rx="5" ry="7" fill="#881337" />
+                            <ellipse cx="110" cy="118" rx="5" ry="7" fill="#881337" />
+
+                            <!-- Happy Smile -->
+                            <path d="M 90 131 Q 100 139 110 131" stroke="#693311" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+
+                    <!-- Badge tag -->
+                    <span class="absolute bottom-1 right-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        萌寵山豬 💖
+                    </span>
+                </div>
+
+                <!-- Featured Wish Message without label header -->
+                <div class="flex-1 text-center md:text-left space-y-4">
+                    <blockquote class="text-2xl md:text-3xl font-extrabold text-slate-800 leading-snug">
+                        「願你像野外山豬一樣<span class="text-pink-600 underline decoration-wavy decoration-pink-400">橫衝直撞、勇往直前</span>，吃飽睡好、永遠無憂無慮，奔向屬於你的閃耀山頭！」
+                    </blockquote>
+
+                    <p class="text-slate-600 text-base leading-relaxed">
+                        新的一歲，祝山豬天天都有踩不完的好運、享不盡的美食！願你保持最真誠、最豪爽的模樣，繼續開心健康地橫行霸道吧！趴踢開起來啦！🔥🍻
+                    </p>
+                </div>
+            </div>
+
+            <hr class="border-dashed border-slate-300 my-6">
+
+            <!-- Interactive Cake & Music Control Box -->
+            <div class="bg-gradient-to-r from-amber-50 via-rose-50 to-orange-50 rounded-2xl p-6 border border-amber-200/80 text-center shadow-inner">
+                <h3 class="text-xl font-bold text-amber-900 mb-2 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-birthday-cake text-rose-500"></i> 山豬許願小角落
+                </h3>
+                <p class="text-slate-600 text-sm mb-4">點擊下方按鈕，吹熄蠟燭並許下今年的願望吧！</p>
+                
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="triggerConfetti()" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 再次撒花 🎉
+                    </button>
+                    
+                    <button onclick="makeWish()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-star"></i> 吹蠟燭許願 🕯️
+                    </button>
+
+                    <button onclick="playPigOink()" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> 山豬招牌叫聲 🐽
+                    </button>
+
+                    <button id="liszt-toggle-btn" onclick="toggleLisztMusic()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-music"></i> <span id="liszt-btn-text">李斯特愛之夢 🎼</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Birthday Letter Trigger Section -->
+        <section class="w-full mb-8 text-center flex flex-col items-center">
+            <button onclick="openLetterModal()" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:via-pink-600 hover:to-amber-600 text-white text-lg font-black rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-95 transform hover:-translate-y-1">
+                <i class="fa-solid fa-envelope-open-text text-2xl group-hover:rotate-12 transition-transform duration-300"></i>
+                <span>開啟給山豬的一封信 ✉️</span>
+                <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-4 w-4 bg-rose-500"></span>
+                </span>
+            </button>
+        </section>
+
+        <!-- Birthday Letter Modal -->
+        <div id="letter-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+            <div class="relative bg-amber-50/95 border-2 border-amber-200 rounded-3xl p-6 md:p-10 max-w-lg w-full shadow-2xl text-slate-800 transform scale-90 transition-transform duration-300" id="letter-card">
+                <!-- Close Button -->
+                <button onclick="closeLetterModal()" class="absolute top-4 right-4 w-9 h-9 bg-rose-100 hover:bg-rose-200 text-rose-600 rounded-full flex items-center justify-center font-bold text-lg transition-colors">
+                    ✕
+                </button>
+
+                <!-- Letter Header Decorative Stamp -->
+                <div class="flex items-center justify-between border-b-2 border-dashed border-amber-300 pb-4 mb-6">
+                    <div class="flex items-center gap-2 text-rose-600 font-bold text-lg">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>親愛的山豬：</span>
+                    </div>
+                    <div class="px-3 py-1 bg-amber-200/80 rounded-lg text-xs font-bold text-amber-800 tracking-wider uppercase border border-amber-300">
+                        特別郵遞 📮
+                    </div>
+                </div>
+
+                <!-- Letter Content -->
+                <div class="space-y-4 text-slate-700 leading-relaxed font-medium text-base text-left">
+                    <p>生日快樂！🎉</p>
+                    <p>在這個特別的日子裡，先祝你在這一天有無限的幸運！</p>
+                    <p>非常感謝你的陪伴與理解</p>
+                    <p>但還請多多體諒，剛睡醒多處功能版本老舊，版本更新需要較長時間，運算錯誤並非有意為之</p>
+                    <p>祝學業進步祝天天開心</p>
+                    <p class="pt-2">最後如果你喜歡格蕾絲的真理之下就給我發🐟</p>
+                    <p class="text-right font-bold text-rose-600 pt-3">— 浣熊 筆 🦝💌</p>
+                </div>
+
+                <!-- Action button inside letter -->
+                <div class="mt-8 text-center">
+                    <button onclick="closeLetterModal()" class="px-6 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95">
+                        收下祝福 💖
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="w-full text-center py-4 text-slate-400 text-sm">
+            <p>Made with ❤️ specially for <strong>山豬</strong> | 生日快樂 HAPPY BIRTHDAY</p>
+        </footer>
+    </main>
+
+    <script>
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        let isLisztPlaying = false;
+        let lisztTimer = null;
+
+        // Sequence of 3 mysterious confirmation questions
+        let currentConfirmStep = 0;
+        const confirmQuestions = [
+            "確定要開打開站嗎？",
+            "真的要打開嗎？",
+            "還要繼續打開嗎？"
+        ];
+
+        window.onload = function() {
+            showConfirmModal();
+        };
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        /* Synthesizing Franz Liszt Liebestraum No. 3 Main Theme Melody using Web Audio API */
+        function playLisztNote(freq, duration, delay, type = 'sine') {
+            if (!isLisztPlaying) return;
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
+
+            // Gentle piano-like envelop
+            gain.gain.setValueAtTime(0, audioCtx.currentTime + delay);
+            gain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + delay + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(audioCtx.currentTime + delay);
+            osc.stop(audioCtx.currentTime + delay + duration);
+        }
+
+        function startLisztMelody() {
+            if (!audioCtx) initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            isLisztPlaying = true;
+            document.getElementById('liszt-btn-text').innerText = "音樂播放中 🎵";
+
+            // Liszt Liebestraum No. 3 opening arpeggiated piano notes and theme
+            const notes = [
+                { f: 207.65, d: 0.8, t: 0.0 },  // Ab3
+                { f: 261.63, d: 0.8, t: 0.3 },  // C4
+                { f: 311.13, d: 0.8, t: 0.6 },  // Eb4
+                { f: 415.30, d: 1.5, t: 0.9 },  // Ab4
+                { f: 392.00, d: 0.8, t: 1.8 },  // G4
+                { f: 415.30, d: 1.2, t: 2.2 },  // Ab4
+                { f: 311.13, d: 1.0, t: 2.8 },  // Eb4
+                { f: 261.63, d: 1.0, t: 3.4 },  // C4
+                { f: 311.13, d: 1.5, t: 4.0 },  // Eb4
+
+                { f: 233.08, d: 0.8, t: 5.2 },  // Bb3
+                { f: 293.66, d: 0.8, t: 5.5 },  // D4
+                { f: 349.23, d: 0.8, t: 5.8 },  // F4
+                { f: 466.16, d: 1.6, t: 6.1 },  // Bb4
+                { f: 415.30, d: 0.8, t: 7.0 },  // Ab4
+                { f: 466.16, d: 1.2, t: 7.4 },  // Bb4
+                { f: 349.23, d: 1.0, t: 8.0 },  // F4
+                { f: 523.25, d: 2.0, t: 8.6 }   // C5
+            ];
+
+            const totalDuration = 10.5;
+
+            function playLoop() {
+                if (!isLisztPlaying) return;
+                notes.forEach(n => {
+                    playLisztNote(n.f, n.d, n.t, 'triangle');
+                    playLisztNote(n.f * 0.5, n.d * 1.2, n.t, 'sine'); // Soft bass harmonic
+                });
+
+                lisztTimer = setTimeout(() => {
+                    if (isLisztPlaying) playLoop();
+                }, totalDuration * 1000);
+            }
+
+            playLoop();
+        }
+
+        function stopLisztMusic() {
+            isLisztPlaying = false;
+            if (lisztTimer) clearTimeout(lisztTimer);
+            document.getElementById('liszt-btn-text').innerText = "李斯特愛之夢 🎼";
+        }
+
+        function toggleLisztMusic() {
+            if (isLisztPlaying) {
+                stopLisztMusic();
+            } else {
+                startLisztMelody();
+            }
+        }
+
+        function playChimeSound() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            const notes = [261.63, 329.63, 392.00, 523.25, 659.25];
+            notes.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime + index * 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.1 + 0.6);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start(audioCtx.currentTime + index * 0.1);
+                osc.stop(audioCtx.currentTime + index * 0.1 + 0.6);
+            });
+        }
+
+        function playPopSound() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.08);
+        }
+
+        function showConfirmModal() {
+            document.getElementById('modal-title').innerText = confirmQuestions[currentConfirmStep];
+            playPopSound();
+        }
+
+        function handleConfirmationResponse(confirmed) {
+            if (!confirmed) {
+                // Reset back to step 1 if user cancels
+                currentConfirmStep = 0;
+                showConfirmModal();
+                return;
+            }
+
+            currentConfirmStep++;
+            if (currentConfirmStep < confirmQuestions.length) {
+                showConfirmModal();
+            } else {
+                document.getElementById('confirm-modal').classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    document.getElementById('confirm-modal').classList.add('hidden');
+                }, 500);
+                openSurprise();
+            }
+        }
+
+        function openSurprise() {
+            playChimeSound();
+
+            // Transition body theme from dark to vibrant celebratory gradient
+            document.body.className = "min-h-screen relative bg-gradient-to-br from-amber-100 via-pink-100 to-rose-200 text-slate-800 transition-colors duration-1000";
+
+            const mainContent = document.getElementById('main-content');
+            mainContent.classList.remove('opacity-0', 'pointer-events-none');
+            
+            triggerGrandConfetti();
+            createBalloons();
+
+            // Auto start Liszt background melody upon opening
+            setTimeout(() => {
+                startLisztMelody();
+            }, 800);
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function triggerGrandConfetti() {
+            const count = 200;
+            const defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+
+        function playPigOink() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.22);
+
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.22);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.22);
+
+            confetti({
+                particleCount: 25,
+                spread: 45,
+                origin: { y: 0.7 }
+            });
+        }
+
+        function makeWish() {
+            triggerConfetti();
+            
+            const wishBox = document.createElement('div');
+            wishBox.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in';
+            wishBox.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl transform transition-all scale-100">
+                    <div class="text-5xl mb-4">🕯️✨</div>
+                    <h3 class="text-2xl font-black text-slate-800 mb-2">許願成功！</h3>
+                    <p class="text-slate-600 mb-6">願吹熄的蠟燭將山豬所有的夢想全部實現！今年的幸運屬性 💯% 提升！</p>
+                    <button onclick="this.closest('.fixed').remove()" class="w-full py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95">
+                        好耶！開吃蛋糕 🍰
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(wishBox);
+        }
+
+        function openLetterModal() {
+            triggerConfetti();
+            const modal = document.getElementById('letter-modal');
+            const card = document.getElementById('letter-card');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            card.classList.remove('scale-90');
+            card.classList.add('scale-100');
+        }
+
+        function closeLetterModal() {
+            const modal = document.getElementById('letter-modal');
+            const card = document.getElementById('letter-card');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-90');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function createBalloons() {
+            const container = document.getElementById('balloon-container');
+            const colors = ['#f43f5e', '#fbbf24', '#3b82f6', '#10b981', '#a855f7'];
+            
+            for (let i = 0; i < 15; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                
+                const size = Math.random() * 30 + 40;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 95;
+                const duration = Math.random() * 6 + 6;
+                const delay = Math.random() * 5;
+
+                balloon.style.left = `${left}%`;
+                balloon.style.animationDuration = `${duration}s`;
+                balloon.style.animationDelay = `${delay}s`;
+
+                balloon.innerHTML = `
+                    <svg width="${size}" height="${size * 1.2}" viewBox="0 0 50 60">
+                        <ellipse cx="25" cy="25" rx="20" ry="24" fill="${color}" />
+                        <polygon points="25,49 21,55 29,55" fill="${color}" />
+                        <path d="M 25 55 Q 23 70 27 80" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+                    </svg>
+                `;
+
+                container.appendChild(balloon);
+            }
+        }
+    </script>
+</body>
+</html>
